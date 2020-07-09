@@ -142,7 +142,7 @@ class App extends React.Component {
         {todos.length
           ? (
             <Footer
-              todosLength={this.state.todos}
+              todos={this.state.todos}
               useFilter={this.useFilter}
               clear={this.clearCompleted}
             />
