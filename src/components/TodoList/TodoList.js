@@ -5,13 +5,15 @@ import { todosShape } from '../Shape/Shape';
 export class TodoList extends React.Component {
   state = {
     editText: '',
+    isEditing: false,
   }
 
   editStart = (event) => {
-    const todo = event.currentTarget;
-    const input = event.currentTarget.children[1];
+    this.setState({
+      isEditing: true,
+    });
 
-    input.value = event.target.innerText;
+    const todo = event.currentTarget;
 
     if (!todo.className) {
       todo.className = 'editing';
@@ -35,6 +37,25 @@ export class TodoList extends React.Component {
         input.parentElement.className = '';
       }
     }
+
+    this.setState({
+      isEditing: false,
+    });
+  }
+
+  editEndBlure = id => (event) => {
+    const input = event.target;
+
+    if (this.state.editText) {
+      this.props.edit(this.state.editText, id);
+      input.parentElement.className = '';
+    } else {
+      input.parentElement.className = '';
+    }
+
+    this.setState({
+      isEditing: false,
+    });
   }
 
   render() {
@@ -62,12 +83,21 @@ export class TodoList extends React.Component {
                 onClick={() => this.props.remove(todo.id)}
               />
             </div>
-            <input
-              type="text"
-              className="edit"
-              onChange={this.addEditText}
-              onKeyDown={this.editEnd(todo.id)}
-            />
+            {
+              this.state.isEditing
+                ? (
+                  <input
+                    type="text"
+                    className="edit"
+                    onChange={this.addEditText}
+                    onKeyDown={this.editEnd(todo.id)}
+                    onBlur={this.editEndBlure(todo.id)}
+                    ref={input => input && input.focus()}
+                    value={todo.todo}
+                  />
+                )
+                : <></>
+            }
           </li>
         ))}
       </ul>
