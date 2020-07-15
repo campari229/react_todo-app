@@ -11,6 +11,7 @@ export class TodoList extends React.Component {
   editStart = (event) => {
     this.setState({
       isEditing: true,
+      editText: event.target.innerText,
     });
 
     const todo = event.currentTarget;
@@ -33,14 +34,13 @@ export class TodoList extends React.Component {
       if (this.state.editText) {
         this.props.edit(this.state.editText, id);
         input.parentElement.className = '';
+        this.setState({
+          isEditing: false,
+        });
       } else {
         input.parentElement.className = '';
       }
     }
-
-    this.setState({
-      isEditing: false,
-    });
   }
 
   editEndBlure = id => (event) => {
@@ -93,7 +93,7 @@ export class TodoList extends React.Component {
                     onKeyDown={this.editEnd(todo.id)}
                     onBlur={this.editEndBlure(todo.id)}
                     ref={input => input && input.focus()}
-                    value={todo.todo}
+                    value={this.state.editText}
                   />
                 )
                 : <></>
