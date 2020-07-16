@@ -61,13 +61,7 @@ class App extends React.Component {
     }));
   }
 
-  useFilter = (tempoTodos) => {
-    this.setState({
-      todos: tempoTodos,
-    });
-  }
-
-  useFilter = (filter) => {
+  setFilter = (filter) => {
     this.setState({
       todosToShow: filter,
     });
@@ -143,7 +137,7 @@ class App extends React.Component {
           ? (
             <Footer
               todos={this.state.todos}
-              useFilter={this.useFilter}
+              setFilter={this.setFilter}
               clear={this.clearCompleted}
             />
           )

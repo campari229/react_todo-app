@@ -8,7 +8,7 @@ export class TodoList extends React.Component {
     isEditing: false,
   }
 
-  editStart = (event) => {
+  onDoubleClickEdit = (event) => {
     this.setState({
       isEditing: true,
       editText: event.target.innerText,
@@ -21,16 +21,16 @@ export class TodoList extends React.Component {
     }
   }
 
-  addEditText = (event) => {
+  addEditedText = (event) => {
     this.setState({
       editText: event.target.value,
     });
   }
 
-  editEnd = id => (event) => {
+  onKeyDownEdit = id => (event) => {
     const input = event.target;
 
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       if (this.state.editText) {
         this.props.edit(this.state.editText, id);
         input.parentElement.className = '';
@@ -43,7 +43,7 @@ export class TodoList extends React.Component {
     }
   }
 
-  editEndBlure = id => (event) => {
+  onBlurEdit = id => (event) => {
     const input = event.target;
 
     if (this.state.editText) {
@@ -63,8 +63,8 @@ export class TodoList extends React.Component {
       <ul className="todo-list">
         {this.props.todos.map(todo => (
           <li
-            className={todo.isDone ? 'completed' : ''}
-            onDoubleClick={this.editStart}
+            className={todo.isDone && 'completed'}
+            onDoubleClick={this.onDoubleClickEdit}
             key={todo.id}
           >
             <div className="view">
@@ -85,18 +85,17 @@ export class TodoList extends React.Component {
             </div>
             {
               this.state.isEditing
-                ? (
+                && (
                   <input
                     type="text"
                     className="edit"
-                    onChange={this.addEditText}
-                    onKeyDown={this.editEnd(todo.id)}
-                    onBlur={this.editEndBlure(todo.id)}
+                    onChange={this.addEditedText}
+                    onKeyDown={this.onKeyDownEdit(todo.id)}
+                    onBlur={this.onBlurEdit(todo.id)}
                     ref={input => input && input.focus()}
                     value={this.state.editText}
                   />
                 )
-                : <></>
             }
           </li>
         ))}
