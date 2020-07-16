@@ -92,19 +92,16 @@ class App extends React.Component {
   }
 
   todosToShow(shownTodos) {
-    if (shownTodos === 'all') {
-      return this.state.todos;
-    }
+    switch (shownTodos) {
+      case 'completed':
+        return this.state.todos.filter(todo => todo.isDone === true);
 
-    if (shownTodos === 'completed') {
-      return this.state.todos.filter(todo => todo.isDone === true);
-    }
+      case 'inProces':
+        return this.state.todos.filter(todo => todo.isDone === false);
 
-    if (shownTodos === 'inProces') {
-      return this.state.todos.filter(todo => todo.isDone === false);
+      default:
+        return this.state.todos;
     }
-
-    return null;
   }
 
   render() {
@@ -121,8 +118,8 @@ class App extends React.Component {
             onClick={this.makeAllChecked}
           />
           <label htmlFor="toggle-all">Mark all as complete</label>
-          {todos.length
-            ? (
+          {Boolean(todos.length)
+            && (
               <TodoList
                 todos={this.todosToShow(this.state.todosToShow)}
                 todoCheck={this.todoCheck}
@@ -130,18 +127,16 @@ class App extends React.Component {
                 edit={this.todoEdit}
               />
             )
-            : <></>
           }
         </section>
-        {todos.length
-          ? (
+        {Boolean(todos.length)
+          && (
             <Footer
               todos={this.state.todos}
               setFilter={this.setFilter}
               clear={this.clearCompleted}
             />
           )
-          : <></>
         }
       </section>
     );

@@ -18,7 +18,7 @@ export class Header extends React.Component {
     const id = this.state.tempoId + 1;
     const input = event.target;
 
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       this.props.addTodo(text, id);
 
       this.setState(prevState => ({

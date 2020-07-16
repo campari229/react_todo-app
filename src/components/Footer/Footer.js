@@ -10,7 +10,7 @@ export const Footer = ({ todos, setFilter, clear }) => (
     <ul className="filters">
       <li>
         <button
-          onClick={() => setFilter('all')}
+          onClick={() => setFilter()}
           type="button"
         >
           All
