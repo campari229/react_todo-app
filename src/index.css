@@ -112,11 +112,11 @@ body {
 }
 
 .new-todo:focus {
-  box-shadow: 0 0 15px #3f3fab;
+  box-shadow: 0 0 15px #ead7d7;
 }
 
 .edit {
-  box-shadow: 0 0 15px #3f3fab;
+  box-shadow: 0 0 15px #ead7d7;
 }
 
 .main {
@@ -310,6 +310,7 @@ li {
   position: absolute;
   right: 0;
   left: 0;
+  bottom: 5px;
 }
 
 .filters li button {
